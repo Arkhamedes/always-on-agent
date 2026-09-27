@@ -1,0 +1,15 @@
+# Claude ops panel (ADR-0016) -- lets the agent's watchdog auto-restart a
+# dead remote-control unit, and the dashboard's panel buttons restart the
+# three claude-related units, without SSH.
+#
+# One-time install by hand (autodeploy never touches sudoers, same as the
+# autodeploy rule itself):
+#   1. Replace YOUR_USER with the user from agent.service.
+#   2. sudo cp deploy/claude-ops.sudoers /etc/sudoers.d/claude-ops
+#   3. sudo chmod 0440 /etc/sudoers.d/claude-ops
+#   4. sudo visudo -cf /etc/sudoers.d/claude-ops    # must print "parsed OK"
+#
+# Until this is installed, auto-recovery degrades to an alert ("auto-restart
+# failed -- install deploy/claude-ops.sudoers"); nothing crashes.
+
+YOUR_USER ALL=(root) NOPASSWD: /usr/bin/systemctl restart remote-control, /usr/bin/systemctl restart agent, /usr/bin/systemctl restart dashboard

@@ -1,0 +1,30 @@
+# Autonomous agent — systemd unit (the new host's "always-on" mechanism).
+#
+# Install:
+#   1. Edit the two paths below to match where you cloned the repo and which
+#      user should run it.
+#   2. sudo cp deploy/agent.service /etc/systemd/system/agent.service
+#   3. sudo systemctl daemon-reload
+#   4. sudo systemctl enable --now agent      # start now + on every boot
+#
+# Watch it:
+#   sudo systemctl status agent
+#   tail -f /path/to/repo/agent.log           # or: journalctl -u agent -f
+
+[Unit]
+Description=Autonomous coding + secretary agent (Telegram)
+After=network-online.target
+Wants=network-online.target
+# Don't let systemd give up if it crash-loops during setup:
+StartLimitIntervalSec=0
+
+[Service]
+Type=simple
+User=YOUR_USER
+WorkingDirectory=/home/YOUR_USER/autonomous-agent
+ExecStart=/home/YOUR_USER/autonomous-agent/run_listener.sh
+Restart=always
+RestartSec=5
+
+[Install]
+WantedBy=multi-user.target

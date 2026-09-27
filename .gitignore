@@ -1,0 +1,41 @@
+# === Secrets — NEVER commit these ===
+agent_env.sh
+agent_env.staging.sh
+*.pem
+token.json*
+*token_cache*
+credentials.json
+client_secret*.json
+.env
+*.bak
+
+# === Runtime state (machine-local, regenerated) ===
+agent.db
+agent.db-journal
+agent.db-wal
+staging.db
+staging.db-journal
+staging.db-wal
+staging_*.html
+*.log
+
+# === Python ===
+__pycache__/
+*.py[cod]
+venv/
+.venv/
+env/
+agent-env/
+
+# === OS / editor cruft ===
+.DS_Store
+*.swp
+.idea/
+.vscode/
+
+# === Personal notes (machine-local, never pushed) ===
+notes/
+
+# === Knowledge base (default is ~/knowledge, outside the repo; this guards
+#     the case where KNOWLEDGE_DIR is pointed inside the checkout) ===
+knowledge/

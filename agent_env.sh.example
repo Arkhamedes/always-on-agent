@@ -1,0 +1,56 @@
+# Copy this file to  agent_env.sh  and fill in real values -- or run
+# `python3 setup.py`, which asks for each value, validates it live, and
+# writes agent_env.sh for you.
+#   cp agent_env.sh.example agent_env.sh && chmod 600 agent_env.sh
+# The real agent_env.sh is gitignored and must NEVER be committed.
+
+# --- GitHub App (the coder opens PRs via a per-task installation token) ---
+# GH_APP_ID is the numeric App ID from the app's settings page.
+# NOTE: this is the App ID, NOT the Client ID — a common mix-up.
+export GH_APP_ID="000000"
+# Absolute path to the App's downloaded private key (.pem). Keep it chmod 600.
+export GH_APP_KEY="/absolute/path/to/your-app.private-key.pem"
+# Default repo (owner/name) the coder targets; seeds the orchestrator's
+# `repo` fact on first contact and you can change it in chat any time.
+# Start with a sandbox repo the App is installed on.
+export CODER_REPO="youruser/your-repo"
+
+# --- Claude Code (runs on your Max plan, not the metered API) ---
+# Generate with:  claude setup-token
+export CLAUDE_CODE_OAUTH_TOKEN="sk-ant-oat..."
+
+# IMPORTANT: do NOT set ANTHROPIC_API_KEY here. If present it overrides the
+# OAuth token above and bills you at metered API rates. (run_listener.sh also
+# unsets it defensively.)
+
+# --- Telegram ---
+export TELEGRAM_BOT_TOKEN="123456:ABC..."
+# Your own numeric Telegram user id — the allowlist that gates the bot.
+export TELEGRAM_ALLOWED_USER_ID="000000000"
+
+# --- Optional overrides (defaults resolve next to the code) ---
+# Give the agent's voice a character (orchestrator replies, morning digest,
+# psychologist, researcher/news, librarian answers, explainer). Tone only --
+# facts, formats, and confirmations don't change. Coder/reviewer PR text
+# stays neutral by design. Unset = no persona.
+# export AGENT_PERSONA="Alfred Pennyworth: dry British wit, unflappable, calls you 'sir'"
+# export AGENT_DB_PATH="/absolute/path/to/agent.db"
+# export GCAL_TOKEN="/absolute/path/to/token.json"
+# export KNOWLEDGE_DIR="$HOME/knowledge"     # librarian's file store
+# export JOURNEY_DIR="$HOME/journey"         # the separate journaling app
+# Weekly digest pushes journey's journal.db to this repo (owner/name, App
+# installed on it). Leave unset to skip journal backups.
+# export JOURNAL_BACKUP_REPO="youruser/journey"
+
+# --- Google Calendar ---
+# Auth is via a token.json file (holds the refresh token), NOT an env var.
+# Authorize once on a machine with a browser, then copy token.json into the
+# repo dir (it's gitignored). See tests/gcal_smoke_test.py.
+# --- Groq (voice transcription) ---
+export GROQ_API_KEY="gsk_..."        # console.groq.com -> API Keys (free tier)
+
+# --- ClickUp (read-only proof of concept -- Enter-to-skip territory) ---
+# Personal token from ClickUp -> Settings -> Apps -> API Token (pk_...).
+# Powers clickup.py, test/clickup_smoke_test.py, and the clickup_* MCP
+# tools; everything fails cleanly with a hint until it's set.
+# export CLICKUP_API_TOKEN="pk_..."

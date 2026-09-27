@@ -1,0 +1,42 @@
+# Claude Code remote-control server -- lets the claude.ai app create sessions
+# on this machine on demand (phone-first, no SSH per session).
+#
+# One-time prerequisites (before installing):
+#   1. Full-scope login on the box: run `claude` (with CLAUDE_CODE_OAUTH_TOKEN
+#      unset), then /login -- copy the URL to any browser, paste the code back.
+#      Accept the workspace-trust dialog while you're in that session.
+#   2. Consent once, interactively: `claude remote-control` in the repo dir,
+#      answer y to "Enable Remote Control?", Ctrl+C once it's up. The answer
+#      is stored; without it the headless service dies on that prompt.
+#   3. Edit User= and the two paths below (same values as agent.service).
+#
+# Install:
+#   sudo cp deploy/remote-control.service /etc/systemd/system/remote-control.service
+#   sudo systemctl daemon-reload
+#   sudo systemctl enable --now remote-control
+#
+# Watch it:  journalctl -u remote-control -f
+#
+# Notes: autodeploy does NOT restart this unit, so app-created sessions
+# survive deploys; they do end if the unit restarts or the VM reboots
+# (sessions are not persisted by the server). Capacity defaults to 3 --
+# every concurrent session is a Node process on a 1 GB box (the third rides
+# on swap; watch memory if all three are busy at once); override with
+# REMOTE_CONTROL_CAPACITY in agent_env.sh.
+
+[Unit]
+Description=Claude Code remote-control server (claude.ai app sessions)
+After=network-online.target
+Wants=network-online.target
+StartLimitIntervalSec=0
+
+[Service]
+Type=simple
+User=YOUR_USER
+WorkingDirectory=/home/YOUR_USER/autonomous-agent
+ExecStart=/home/YOUR_USER/autonomous-agent/run_remote_control.sh
+Restart=always
+RestartSec=5
+
+[Install]
+WantedBy=multi-user.target

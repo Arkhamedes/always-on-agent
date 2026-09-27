@@ -1,0 +1,22 @@
+{
+  "permissions": {
+    "allow": [
+      "Bash(git fetch *)",
+      "Bash(gcloud services list *)",
+      "Bash(gcloud compute instances list *)",
+      "Bash(gcloud compute instances describe *)",
+      "Bash(claude mcp list)",
+      "mcp__agent__knowledge_search",
+      "mcp__agent__knowledge_list",
+      "mcp__agent__knowledge_read",
+      "mcp__agent__drive_find",
+      "mcp__agent__calendar_list_events",
+      "mcp__agent__calendar_free_busy",
+      "mcp__agent__open_todos",
+      "mcp__agent__archived_todos",
+      "mcp__agent__habits_status",
+      "mcp__agent__pending_reminders"
+    ]
+  },
+  "enableAllProjectMcpServers": true
+}

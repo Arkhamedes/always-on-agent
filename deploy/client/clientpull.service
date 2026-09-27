@@ -1,0 +1,22 @@
+# One update check for the MINIMAL client profile (fired by clientpull.timer).
+# Pull-only: no services exist to restart on this profile. Do NOT install
+# this on the owner's VM (autodeploy.* is that box's deploy path), and do
+# NOT install autodeploy.* here -- its restart step fails on a no-services
+# instance.
+#
+# Install (on the client VM):
+#   1. Edit the three lines below to match your user and where you cloned
+#      the repo.
+#   2. sudo cp deploy/client/clientpull.{service,timer} /etc/systemd/system/
+#   3. sudo systemctl daemon-reload && sudo systemctl enable --now clientpull.timer
+#
+# Watch it:  journalctl -u clientpull -n 20
+[Unit]
+Description=Pull updates from GitHub (one check, client profile)
+After=network-online.target
+
+[Service]
+Type=oneshot
+User=YOUR_USER
+WorkingDirectory=/home/YOUR_USER/autonomous-agent
+ExecStart=/home/YOUR_USER/autonomous-agent/deploy/client/clientpull.sh

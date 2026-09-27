@@ -1,0 +1,15 @@
+# One deploy check (fired by autodeploy.timer).
+# Install (on the VM):
+#   1. Edit the three lines below to match your user and where you cloned
+#      the repo (same values as in agent.service).
+#   2. sudo cp deploy/autodeploy.{service,timer} /etc/systemd/system/
+#   3. sudo systemctl daemon-reload && sudo systemctl enable --now autodeploy.timer
+[Unit]
+Description=Auto-deploy from GitHub (one check)
+After=network-online.target
+
+[Service]
+Type=oneshot
+User=YOUR_USER
+WorkingDirectory=/home/YOUR_USER/autonomous-agent
+ExecStart=/home/YOUR_USER/autonomous-agent/deploy/autodeploy.sh

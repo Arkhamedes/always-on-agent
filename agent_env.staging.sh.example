@@ -1,0 +1,18 @@
+# Staging overrides -- loaded by stage.py ON TOP of agent_env.sh, so only
+# put the values that differ from production here.
+#   cp agent_env.staging.sh.example agent_env.staging.sh && chmod 600 agent_env.staging.sh
+# agent_env.staging.sh is gitignored and must NEVER be committed.
+#
+# The staging DB needs no entry: stage.py always forces AGENT_DB_PATH to
+# ./staging.db (override with STAGING_DB_PATH) so staging can never touch
+# agent.db. No Telegram vars needed either -- stage.py replaces the listener.
+
+# A THROWAWAY sandbox repo (owner/name) -- staging coder tasks open real PRs
+# on it. The GitHub App must be installed on it.
+export CODER_REPO="youruser/sandbox-repo"
+
+# Laptop path to the GitHub App private key, if it differs from agent_env.sh.
+# export GH_APP_KEY="/absolute/laptop/path/to/your-app.private-key.pem"
+
+# Never back up the journal from staging.
+export JOURNAL_BACKUP_REPO=""
