@@ -29,7 +29,7 @@ flowchart LR
 - **Built for a 1 GB VM.** Search over my notes uses SQLite full-text search instead of an embedding model, so nothing heavy stays in memory ([ADR-0003](docs/adr/0003-personal-knowledge-base-fts5.md)). When memory got tight, I resized the VM instead of cutting features ([ADR-0011](docs/adr/0011-vm-resize-e2-medium.md)).
 - **Least-privilege credentials.** It uses short-lived GitHub App tokens instead of a personal access token, read-only Gmail and Drive scopes, and a single env loader that strips unintended API keys.
 - **Operable by one person.** It runs as a systemd service on a GCP VM and deploys itself: a timer pulls from GitHub every 2 minutes. There's a setup wizard that checks every credential against the real service, and a laptop staging mode ([ADR-0009](docs/adr/0009-laptop-staging-and-clone-ready-setup.md)).
-- **Decisions are documented.** 16 architecture decision records live in [docs/adr](docs/adr).
+- **Decisions are documented.** 15 architecture decision records live in [docs/adr](docs/adr).
 
 **Stack:** Python, Claude Code CLI (headless), Telegram Bot API, SQLite (FTS5), Google Calendar/Sheets/Gmail/Drive APIs, GitHub App API, MCP, React + TypeScript (Vite), systemd, GCP Compute Engine, Tailscale.
 

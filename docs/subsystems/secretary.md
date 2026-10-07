@@ -15,7 +15,7 @@ authorized.
   start, end}]` — also used directly by `lifeos._today_events` (morning
   digest), `dashboard._calendar` (schedule view), and
   `psychologist._events_between` (daily fold + answer/weekly context,
-  ADR-0005; wrapped best-effort there). Capped at 15 results.
+  wrapped best-effort there). Capped at 15 results.
   `timeMin`/`timeMax` must reach Google as RFC3339 *with a UTC offset* or
   the API 400s; naive ISO datetimes are normalized via `_rfc3339`,
   interpreted in `tz` (an IANA name, e.g. the op's `timezone`) or UTC.
